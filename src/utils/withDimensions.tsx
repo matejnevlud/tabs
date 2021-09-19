@@ -31,12 +31,14 @@ export default function withDimensions<Props extends InjectedProps>(
       };
     }
 
+    eventListener: any = null;
+
     componentDidMount() {
-      Dimensions.addEventListener('change', this.handleOrientationChange);
+      this.eventListener = Dimensions.addEventListener('change', this.handleOrientationChange);
     }
 
     componentWillUnmount() {
-      Dimensions.removeEventListener('change', this.handleOrientationChange);
+      this.eventListener && this.eventListener.remove();
     }
 
     handleOrientationChange = ({ window }: { window: ScaledSize }) => {
